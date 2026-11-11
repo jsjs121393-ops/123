@@ -1,1 +1,2 @@
-server/_core/publicConfig.ts
+export const publicPlatformScript = "";
+
