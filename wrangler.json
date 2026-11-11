@@ -1,6 +1,9 @@
 {
   "name": "nepedu",
   "compatibility_date": "2026-11-11",
+  "build": {
+    "command": "npm run build"
+  },
   "assets": {
     "directory": "dist"
   }
