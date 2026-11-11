@@ -1,5 +1,5 @@
 {
-  "name": "nepedu",
+  "name": "123",
   "compatibility_date": "2026-11-11",
   "build": {
     "command": "npm run build"
@@ -8,3 +8,4 @@
     "directory": "dist"
   }
 }
+
