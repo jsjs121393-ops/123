@@ -5,7 +5,7 @@
     "command": "npm run build"
   },
   "assets": {
-    "directory": "dist"
+    "directory": "dist/public",
+    "not_found_handling": "single-page-application"
   }
 }
-
