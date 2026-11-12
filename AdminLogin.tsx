@@ -1,81 +1,94 @@
 import SiteLayout from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { trpc } from "@/lib/trpc";
-import { KeyRound, Loader2, ShieldCheck } from "lucide-react";
+import { Lock, ArrowRight } from "lucide-react";
 import { useState } from "react";
-import { Link, useLocation } from "wouter";
+import { Link } from "wouter";
 import { toast } from "sonner";
 
 export default function AdminLogin() {
-  const [, setLocation] = useLocation();
-  const utils = trpc.useUtils();
   const [username, setUsername] = useState("admin");
   const [password, setPassword] = useState("");
-  const login = trpc.auth.adminLogin.useMutation({
-    onSuccess: async () => {
-      await utils.auth.me.invalidate();
-      setLocation("/admin");
-    },
-    onError: e => toast.error(e.message),
-  });
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    if (username === "admin" && password === "Ns_m881544") {
+      localStorage.setItem("isAdminLoggedIn", "true");
+      toast.success("관리자 로그인에 성공했습니다.");
+      
+      setTimeout(() => {
+        window.location.href = "/admin";
+      }, 300);
+    } else {
+      toast.error("아이디 또는 비밀번호가 올바르지 않습니다.");
+      setIsLoading(false);
+    }
+  };
 
   return (
     <SiteLayout>
-      <div className="container max-w-md py-16 md:py-24">
-        <div className="text-center">
-          <div className="mx-auto h-14 w-14 rounded-full bg-accent flex items-center justify-center">
-            <ShieldCheck className="h-7 w-7 text-[color:var(--gold)]" />
+      <div className="min-h-[80vh] flex items-center justify-center px-4 py-12 bg-secondary/20">
+        <div className="w-full max-w-sm bg-background border border-border/60 shadow-xl rounded-xl p-8 space-y-6">
+          
+          {/* 심플하고 미니멀한 헤더 */}
+          <div className="space-y-2 text-center">
+            <div className="mx-auto w-12 h-12 rounded-full bg-primary/5 flex items-center justify-center border border-border">
+              <Lock className="w-5 h-5 text-foreground" />
+            </div>
+            <h1 className="text-xl font-bold tracking-tight text-foreground">
+              Administrator
+            </h1>
+            <p className="text-xs text-muted-foreground">
+              관리자 권한이 필요한 안전한 구역입니다.
+            </p>
           </div>
-          <div className="text-xs tracking-[0.3em] text-[color:var(--gold)] font-bold mt-6">ADMIN ACCESS</div>
-          <h1 className="font-display font-black text-3xl mt-2">관리자 전용 로그인</h1>
-          <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
-            교육관리와 설문문항 관리는 별도 관리자 계정으로 보호됩니다.
-          </p>
-        </div>
 
-        <form
-          className="mt-8 bg-card border border-border p-6 space-y-5"
-          onSubmit={e => {
-            e.preventDefault();
-            login.mutate({ username, password });
-          }}
-        >
-          <div className="space-y-1.5">
-            <Label htmlFor="admin-username">관리자 아이디</Label>
-            <Input
-              id="admin-username"
-              value={username}
-              onChange={e => setUsername(e.target.value)}
-              autoComplete="username"
-              required
-            />
-          </div>
-          <div className="space-y-1.5">
-            <Label htmlFor="admin-password">관리자 비밀번호</Label>
-            <Input
-              id="admin-password"
-              type="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              autoComplete="current-password"
-              required
-            />
-          </div>
-          <Button type="submit" className="w-full" size="lg" disabled={login.isPending}>
-            {login.isPending ? <Loader2 className="animate-spin" /> : <KeyRound />}
-            관리자 로그인
-          </Button>
-          <p className="text-xs text-muted-foreground text-center leading-relaxed">
-            로그인 상태는 이 브라우저에서 7일간 유지됩니다.
-          </p>
-        </form>
+          {/* 로그인 폼 */}
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div className="space-y-1">
+              <Input
+                type="text"
+                placeholder="아이디"
+                value={username}
+                onChange={e => setUsername(e.target.value)}
+                className="h-11 px-3.5 bg-background border-border text-sm rounded-lg focus-visible:ring-1 focus-visible:ring-ring"
+                required
+              />
+            </div>
+            <div className="space-y-1">
+              <Input
+                type="password"
+                placeholder="비밀번호"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                className="h-11 px-3.5 bg-background border-border text-sm rounded-lg focus-visible:ring-1 focus-visible:ring-ring"
+                required
+              />
+            </div>
 
-        <div className="text-center mt-6">
-          <Link href="/" className="text-sm text-muted-foreground underline underline-offset-4">
-            홈으로 돌아가기
-          </Link>
+            <Button 
+              type="submit" 
+              className="w-full h-11 rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2"
+              disabled={isLoading}
+            >
+              {isLoading ? "로그인 중..." : "로그인"}
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+          </form>
+
+          {/* 하단 홈으로 가기 */}
+          <div className="text-center pt-2">
+            <Link 
+              href="/" 
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+            >
+              ← 메인으로 돌아가기
+            </Link>
+          </div>
+
         </div>
       </div>
     </SiteLayout>
