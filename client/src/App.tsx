@@ -9,6 +9,9 @@ type Application = { id: string; courseId: string; name: string; nation: string;
 type SurveyAnswer = { id: string; courseId: string; ratings: number[]; comment: string; createdAt: string };
 
 const KEYS = { courses: "nep_courses", apps: "nep_apps", answers: "nep_answers" };
+const EMBLEM = "/assets/nephtys-emblem.png";
+const LOGO_FULL = "/assets/nephtys-logo.png";
+const SLOGAN = "국제사회의 평화·번영·정의를 위해";
 
 const DEFAULT_COURSES: Course[] = [
   { id: "sample", title: "신입 기초 교육", desc: "네프티스 연합 소개와 기본 활동 안내", date: "추후 공지", capacity: 30 },
@@ -59,76 +62,67 @@ function useAdminGuard() {
 const css = `
 *{box-sizing:border-box}
 :root{color-scheme:light}
-body{margin:0;font-family:'Noto Sans KR',sans-serif;background:#f7f9fc;color:#182d49;word-break:keep-all}
+body{margin:0;font-family:'Noto Sans KR',system-ui,sans-serif;background:#f0eceb;color:#1a1816;word-break:keep-all}
 a{color:inherit;text-decoration:none}
-.wrap{max-width:760px;margin:0 auto;padding:30px 16px 54px}
-.nav{background:#213f68;color:#fff;box-shadow:0 2px 8px rgba(20,45,78,.12)}
-.nav .wrap{display:flex;gap:18px;align-items:center;flex-wrap:wrap;padding-top:22px;padding-bottom:24px}
-.nav b{font-family:'Noto Serif KR',serif;font-size:25px;font-weight:500;letter-spacing:-.06em;margin-right:auto;white-space:nowrap}
-.nav a{font-size:17px;opacity:.96;white-space:nowrap;padding:4px 0;border-bottom:2px solid transparent}
-.nav a:hover{border-bottom-color:rgba(255,255,255,.72)}
-.card{background:#fff;border:1px solid #edf0f5;border-radius:16px;padding:28px 34px;margin-bottom:16px;box-shadow:0 5px 18px rgba(31,65,107,.08)}
-h1{font-family:'Noto Serif KR',serif;font-size:36px;font-weight:500;letter-spacing:-.07em;margin:22px 0 30px;color:#182d49}
-h2{font-size:20px;margin:0 0 10px;letter-spacing:-.04em}
-p{line-height:1.75;margin:7px 0;font-size:18px;letter-spacing:-.04em}
-.muted{color:#68788c;font-size:14px}
-label{display:block;font-size:15px;font-weight:500;margin:14px 0 5px}
-input,select,textarea{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;font:inherit;background:#fff}
-textarea{min-height:96px}
-button,.btn{display:inline-block;background:#213f68;color:#fff;border:0;border-radius:11px;padding:12px 22px;font:inherit;cursor:pointer;margin-top:16px;box-shadow:0 2px 5px rgba(31,65,107,.12)}
-.btn.sub{background:#e7edf5;color:#1f3552;box-shadow:none}
-.btn.red{background:#dc2626}
-.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-.rate{display:flex;gap:8px}
-.rate label{margin:0;display:flex;align-items:center;gap:3px;font-weight:400}
-.rate input{width:auto}
-.bar{background:#e5ebf3;border-radius:5px;height:10px;overflow:hidden;margin:4px 0}
-.bar i{display:block;height:100%;background:#3e6da4}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{text-align:left;padding:9px 6px;border-bottom:1px solid #e2e8f0;vertical-align:top}
-.ok{color:#15803d;font-weight:500}
-@media(max-width:560px){
- .wrap{padding:28px 16px 46px}
- .nav .wrap{gap:12px 18px;padding-top:20px;padding-bottom:24px}
- .nav b{flex-basis:100%;font-size:25px;margin-right:0}
- .nav a{font-size:16px}
- .card{padding:25px 26px}
- h1{font-size:34px;margin-top:24px;margin-bottom:30px}
- p{font-size:17px}
-}
+.wrap{max-width:1280px;margin:0 auto;padding:0 16px}
+.nav{background:#fbf9f8;color:#1a1816;border-bottom:1px solid #d8d0cb;position:sticky;top:0;z-index:10}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:18px;padding-top:14px;padding-bottom:14px}
+.nav b{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:900;letter-spacing:-.04em;display:flex;align-items:center;gap:10px;white-space:nowrap}
+.nav b:before{content:"";display:block;width:38px;height:38px;background:url('/assets/nephtys-emblem.png') center/contain no-repeat}
+.nav-links{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.nav a{font-size:14px;padding:8px 10px;border-bottom:2px solid transparent;transition:.2s}
+.nav a:hover,.nav a.active{color:#9a7424;border-bottom-color:#9a7424}
+.page{min-height:calc(100vh - 72px)}
+.content{max-width:1280px;margin:0 auto;padding:58px 16px 80px}
+.card{background:#fbf9f8;border:1px solid #d8d0cb;border-radius:5px;padding:24px;margin-bottom:16px;box-shadow:0 8px 24px rgba(19,18,17,.05)}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:24px 0 52px}
+.hero-copy{padding:10px 0}.eyebrow{font-size:11px;letter-spacing:.28em;color:#9a7424;font-weight:700}
+.hero h1{font-family:'Noto Serif KR',serif;font-size:clamp(38px,5vw,68px);line-height:1.14;font-weight:900;letter-spacing:-.06em;margin:18px 0 0}
+.hero h1 em{font-style:normal;color:#9a7424}.hero p{font-size:18px;line-height:1.8;max-width:590px;margin:24px 0;color:#5f5853}
+.hero-art{display:flex;justify-content:center;position:relative}.hero-art:before{content:"";position:absolute;inset:0;background:repeating-conic-gradient(from 0deg at 50% 52%,rgba(21,20,19,.07) 0deg .6deg,transparent .6deg 7.5deg);-webkit-mask-image:radial-gradient(circle at 50% 52%,#000 0%,transparent 68%);mask-image:radial-gradient(circle at 50% 52%,#000 0%,transparent 68%)}
+.hero-art img{position:relative;max-height:380px;width:auto;max-width:100%}
+h1,h2,h3{font-family:'Noto Serif KR',serif;letter-spacing:-.04em}h1{font-size:38px;font-weight:900;margin:0 0 24px}h2{font-size:28px;font-weight:900;margin:0 0 14px}h3{font-size:20px;margin:0 0 8px}
+p{line-height:1.7;margin:6px 0}.muted{color:#6d6560;font-size:13px}
+.section-title{display:flex;align-items:end;justify-content:space-between;border-top:1px solid #131211;padding-top:18px;margin-top:18px}.section-title small{color:#9a7424;letter-spacing:.24em;font-weight:700;font-size:11px}
+label{display:block;font-size:14px;font-weight:600;margin:12px 0 4px}input,select,textarea{width:100%;padding:11px;border:1px solid #cfc6c0;border-radius:4px;font:inherit;background:#fff}textarea{min-height:90px}
+button,.btn{display:inline-block;background:#151413;color:#f6f2f0;border:0;border-radius:3px;padding:11px 17px;font:inherit;cursor:pointer;margin-top:12px}.btn.sub{background:#e8e2df;color:#2a2725}.btn.red{background:#b3261e}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.course-list{border-top:1px solid #131211}.course-row{display:block;padding:20px 0;border-bottom:1px solid #d8d0cb}.course-row:hover{background:rgba(233,220,184,.18)}
+.rate{display:flex;gap:6px}.rate label{margin:0;display:flex;align-items:center;gap:3px;font-weight:400}.rate input{width:auto}.bar{background:#ebe6e3;border-radius:4px;height:10px;overflow:hidden;margin:3px 0}.bar i{display:block;height:100%;background:#9a7424}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:8px 6px;border-bottom:1px solid #d8d0cb;vertical-align:top}.ok{color:#287447;font-weight:600}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #131211;margin-top:18px}.step{padding:20px 18px;border-left:1px solid #d8d0cb}.step:first-child{border-left:0;padding-left:0}.step-num{font-family:'Noto Serif KR',serif;font-size:32px;color:#9a7424;font-weight:900}
+.footer{background:#151413;color:#e9e3df;margin-top:30px}.footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-top:28px;padding-bottom:28px}.footer-brand{display:flex;align-items:center;gap:12px}.footer-brand img{width:48px;height:48px;background:#f0eceb;padding:3px;border-radius:50%}
+@media(max-width:760px){.nav .wrap{align-items:flex-start;flex-wrap:wrap}.nav b{flex-basis:100%;font-size:20px}.nav-links{gap:0}.nav a{font-size:14px;padding:6px 8px}.content{padding-top:36px}.hero{grid-template-columns:1fr;gap:14px;padding-bottom:34px}.hero-art{order:-1}.hero-art img{max-height:250px}.hero h1{font-size:43px}.hero p{font-size:16px}.steps{grid-template-columns:1fr}.step{border-left:0;border-top:1px solid #d8d0cb;padding:16px 0}.step:first-child{border-top:0}.footer .wrap{align-items:flex-start;flex-direction:column}}
 `;
-
 function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <style>{css}</style>
-      <div className="nav">
-        <div className="wrap">
-          <b>네프티스 연합 교육처</b>
-          <Link href="/">홈</Link>
-          <Link href="/courses">교육 신청</Link>
-          <Link href="/survey">설문</Link>
-          <Link href="/stats">통계</Link>
-          <Link href="/admin">관리자</Link>
-        </div>
+      <div className="page">
+        <header className="nav">
+          <div className="wrap">
+            <Link href="/"><b>네프티스 연합 교육처</b></Link>
+            <nav className="nav-links" aria-label="주요 메뉴">
+              <Link href="/">홈</Link><Link href="/courses">교육 신청</Link><Link href="/survey">설문</Link><Link href="/stats">통계</Link><Link href="/admin">관리자</Link>
+            </nav>
+          </div>
+        </header>
+        <main className="content">{children}</main>
+        <footer className="footer"><div className="wrap"><div className="footer-brand"><img src={EMBLEM} alt="" /><div><b>네프티스 연합 교육처</b><div className="muted">{SLOGAN}</div></div></div><span className="muted">EST. 2024</span></div></footer>
       </div>
-      <div className="wrap">{children}</div>
     </>
   );
 }
 
 function Home() {
+  const [courses] = useStore<Course[]>(KEYS.courses, DEFAULT_COURSES);
+  const open = courses.slice(0, 3);
   return (
     <Layout>
-      <h1>네프티스 연합 교육처</h1>
-      <div className="card">
-        <p>교육 신청부터 이수 후 설문, 결과 통계까지 한곳에서.</p>
-        <div className="row">
-          <Link href="/courses" className="btn">교육 신청하기</Link>
-          <Link href="/survey" className="btn sub">설문 참여하기</Link>
-          <Link href="/stats" className="btn sub">통계 보기</Link>
-        </div>
-      </div>
+      <section className="hero">
+        <div className="hero-copy"><div className="eyebrow">NEPHTHYS UNION · EDUCATION BUREAU</div><h1>배움으로 세우는<br/>연합의 <em>질서</em></h1><p>네프티스 연합 교육처의 교육 신청, 이수 후 설문, 결과 통계를 한곳에서 진행합니다.</p><div className="row"><Link href="/courses" className="btn">교육 신청하기</Link><Link href="/survey" className="btn sub">이수 설문 참여</Link><Link href="/stats" className="btn sub">결과 통계 보기</Link></div></div>
+        <div className="hero-art"><img src={LOGO_FULL} alt="네프티스 연합 엠블럼" /></div>
+      </section>
+      <section><div className="section-title"><div><small>{open.length ? "NOW ENROLLING" : "COURSES"}</small><h2>{open.length ? "지금 신청할 수 있는 교육" : "교육 안내"}</h2></div><Link href="/courses" className="muted">전체 보기</Link></div><div className="course-list">{open.map(c=><Link className="course-row" key={c.id} href={`/courses/${c.id}`}><h3>{c.title}</h3><p>{c.desc}</p><span className="muted">일정: {c.date} · 정원 {c.capacity}명</span></Link>)}</div></section>
+      <section style={{marginTop:48}}><h2>이용 절차</h2><ol className="steps"><li className="step"><div className="step-num">01</div><h3>교육 신청</h3><p className="muted">모집 중인 교육을 확인하고 신청서를 제출합니다.</p></li><li className="step"><div className="step-num">02</div><h3>이수 후 설문</h3><p className="muted">교육 종료 후 설문에 참여합니다.</p></li><li className="step"><div className="step-num">03</div><h3>결과 통계</h3><p className="muted">응답 결과를 통계로 확인합니다.</p></li></ol></section>
     </Layout>
   );
 }
@@ -482,4 +476,4 @@ export default function App() {
       <Route component={NotFound} />
     </Switch>
   );
-                                 }
+        }
