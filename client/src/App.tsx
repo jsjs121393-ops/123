@@ -58,33 +58,44 @@ function useAdminGuard() {
 
 const css = `
 *{box-sizing:border-box}
-body{margin:0;font-family:'Noto Sans KR',sans-serif;background:#f8fafc;color:#1e293b}
+:root{color-scheme:light}
+body{margin:0;font-family:'Noto Sans KR',sans-serif;background:#f7f9fc;color:#182d49;word-break:keep-all}
 a{color:inherit;text-decoration:none}
-.wrap{max-width:720px;margin:0 auto;padding:16px}
-.nav{background:#1e3a5f;color:#fff}
-.nav .wrap{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-.nav b{font-family:'Noto Serif KR',serif;font-size:17px;margin-right:auto}
-.nav a{font-size:14px;opacity:.9}
-.card{background:#fff;border-radius:12px;padding:18px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.1)}
-h1{font-family:'Noto Serif KR',serif;font-size:22px;margin:8px 0 14px}
-h2{font-size:17px;margin:0 0 8px}
-p{line-height:1.6;margin:6px 0}
-.muted{color:#64748b;font-size:13px}
-label{display:block;font-size:14px;font-weight:500;margin:12px 0 4px}
-input,select,textarea{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:8px;font:inherit;background:#fff}
-textarea{min-height:80px}
-button,.btn{display:inline-block;background:#1e3a5f;color:#fff;border:0;border-radius:8px;padding:10px 16px;font:inherit;cursor:pointer;margin-top:12px}
-.btn.sub{background:#e2e8f0;color:#1e293b}
+.wrap{max-width:760px;margin:0 auto;padding:30px 16px 54px}
+.nav{background:#213f68;color:#fff;box-shadow:0 2px 8px rgba(20,45,78,.12)}
+.nav .wrap{display:flex;gap:18px;align-items:center;flex-wrap:wrap;padding-top:22px;padding-bottom:24px}
+.nav b{font-family:'Noto Serif KR',serif;font-size:25px;font-weight:500;letter-spacing:-.06em;margin-right:auto;white-space:nowrap}
+.nav a{font-size:17px;opacity:.96;white-space:nowrap;padding:4px 0;border-bottom:2px solid transparent}
+.nav a:hover{border-bottom-color:rgba(255,255,255,.72)}
+.card{background:#fff;border:1px solid #edf0f5;border-radius:16px;padding:28px 34px;margin-bottom:16px;box-shadow:0 5px 18px rgba(31,65,107,.08)}
+h1{font-family:'Noto Serif KR',serif;font-size:36px;font-weight:500;letter-spacing:-.07em;margin:22px 0 30px;color:#182d49}
+h2{font-size:20px;margin:0 0 10px;letter-spacing:-.04em}
+p{line-height:1.75;margin:7px 0;font-size:18px;letter-spacing:-.04em}
+.muted{color:#68788c;font-size:14px}
+label{display:block;font-size:15px;font-weight:500;margin:14px 0 5px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;font:inherit;background:#fff}
+textarea{min-height:96px}
+button,.btn{display:inline-block;background:#213f68;color:#fff;border:0;border-radius:11px;padding:12px 22px;font:inherit;cursor:pointer;margin-top:16px;box-shadow:0 2px 5px rgba(31,65,107,.12)}
+.btn.sub{background:#e7edf5;color:#1f3552;box-shadow:none}
 .btn.red{background:#dc2626}
-.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.rate{display:flex;gap:6px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.rate{display:flex;gap:8px}
 .rate label{margin:0;display:flex;align-items:center;gap:3px;font-weight:400}
 .rate input{width:auto}
-.bar{background:#e2e8f0;border-radius:4px;height:10px;overflow:hidden;margin:3px 0}
-.bar i{display:block;height:100%;background:#2563eb}
+.bar{background:#e5ebf3;border-radius:5px;height:10px;overflow:hidden;margin:4px 0}
+.bar i{display:block;height:100%;background:#3e6da4}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{text-align:left;padding:8px 6px;border-bottom:1px solid #e2e8f0;vertical-align:top}
+th,td{text-align:left;padding:9px 6px;border-bottom:1px solid #e2e8f0;vertical-align:top}
 .ok{color:#15803d;font-weight:500}
+@media(max-width:560px){
+ .wrap{padding:28px 16px 46px}
+ .nav .wrap{gap:12px 18px;padding-top:20px;padding-bottom:24px}
+ .nav b{flex-basis:100%;font-size:25px;margin-right:0}
+ .nav a{font-size:16px}
+ .card{padding:25px 26px}
+ h1{font-size:34px;margin-top:24px;margin-bottom:30px}
+ p{font-size:17px}
+}
 `;
 
 function Layout({ children }: { children: React.ReactNode }) {
@@ -471,5 +482,4 @@ export default function App() {
       <Route component={NotFound} />
     </Switch>
   );
-  }
-
+                                 }
